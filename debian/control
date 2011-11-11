@@ -1,8 +1,8 @@
 Source: themechanger
-Section: user/other
+Section: user/utilities
 Priority: optional
 Maintainer: Saija Etelaniemi <setelani@live.com>
-Build-Depends: debhelper (>= 5), libqt4-dev
+Build-Depends: debhelper (>= 5), libqt4-dev, libmeegotouchcore0
 Standards-Version: 3.7.3
 Homepage: http://leimu.drupalgardens.com/content/themechanger
 
