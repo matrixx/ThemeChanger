@@ -17,6 +17,7 @@ OTHER_FILES += \
     qml/main.qml \
     ThemeChanger.desktop \
     ThemeChanger.png \
+    ThemeChanger.svg \
     qtc_packaging/debian_harmattan/rules \
     qtc_packaging/debian_harmattan/README \
     qtc_packaging/debian_harmattan/copyright \
