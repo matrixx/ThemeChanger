@@ -1,3 +1,9 @@
+themechanger (0.0.2) unstable; urgency=low
+
+  * Added: feature to fix broken emoticon cache
+
+ -- Saija Etelaniemi <setelani@live.com> Tue, 06 Mar 2012 20:53:23 +0200
+
 themechanger (0.0.1) unstable; urgency=low
 
   * Initial Release.
