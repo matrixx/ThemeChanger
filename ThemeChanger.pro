@@ -18,13 +18,14 @@ OTHER_FILES += \
     ThemeChanger.desktop \
     ThemeChanger.png \
     ThemeChanger.svg \
+    qml/ThemeDelegate.qml \
     qtc_packaging/debian_harmattan/rules \
     qtc_packaging/debian_harmattan/README \
+    qtc_packaging/debian_harmattan/manifest.aegis \
     qtc_packaging/debian_harmattan/copyright \
     qtc_packaging/debian_harmattan/control \
     qtc_packaging/debian_harmattan/compat \
-    qtc_packaging/debian_harmattan/changelog \
-    qml/ThemeDelegate.qml
+    qtc_packaging/debian_harmattan/changelog
 
 RESOURCES += \
     res.qrc
@@ -42,3 +43,5 @@ QMAKE_LFLAGS += -pie -rdynamic
 HEADERS += \
     themehandler.h \
     thememodel.h
+
+

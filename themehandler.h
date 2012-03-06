@@ -18,10 +18,13 @@ signals:
 	void currentThemeChanged(int index);
 	void newThemeApplied();
 	void themeChangeCanceled();
+        void cacheFixSucceeded();
+        void cacheFixFailed();
 
 public slots:
 	Q_INVOKABLE void changeTheme(int index);
 	Q_INVOKABLE ThemeModel* themeModel();
+        Q_INVOKABLE void fixEmoticonCache();
 
 private slots:
 	void updateCurrentTheme();

@@ -2,8 +2,11 @@
 #include <QDir>
 #include <QSettings>
 #include <MGConfItem>
+#include <QDebug>
 
 static const QString THEMEDIR = "/usr/share/themes/";
+static const QString USERHOME = "/home/user/";
+static const QString CACHEDIR = ".emoticonthemecache/";
 
 
 ThemeHandler::ThemeHandler(QObject *parent) :
@@ -127,7 +130,57 @@ void ThemeHandler::updateCurrentTheme()
 	int index = m_model->indexOf(themeName);
 	if (index >= 0) {
 		emit currentThemeChanged(index);
-	}
+        }
+}
+
+void ThemeHandler::fixEmoticonCache()
+{
+    QString backupTheme = "blanco";
+
+    int index = -1;
+    QString currentTheme = m_gconfItem->value().toString();
+    if (currentTheme.isEmpty()) {
+            currentTheme = backupTheme;
+    }
+    QDir iconDir(QString(THEMEDIR + currentTheme + "/meegotouch/icons/"));
+    QStringList emoticons = iconDir.entryList(QStringList() << "icon-s-messaging-smiley-*");
+    qDebug() << "list for theme" << currentTheme;
+    qDebug() << emoticons;
+    // copy files
+    QDir backupIconDir(QString(THEMEDIR + backupTheme + "/meegotouch/icons"));
+    QStringList backupEmoticons = backupIconDir.entryList(QStringList() << "icon-s-messaging-smiley-*");
+    qDebug() << "list for theme" << backupTheme;
+    qDebug() << backupEmoticons;
+    QDir cacheDir(USERHOME + CACHEDIR);
+    QDir userDir(USERHOME);
+    if (!cacheDir.exists()) {
+        qDebug() << "cachedir did not exist, creating one";
+        bool success = userDir.mkdir(CACHEDIR);
+        qDebug() << "create successful:" << success;
+    } else {
+        qDebug() << "cachedir exists, continuing";
+    }
+    qDebug() << "copying" << emoticons.size() << "entries from" << currentTheme;
+    foreach (QString fileName, emoticons) {
+        QFile file(iconDir.filePath(fileName));
+        qDebug() << "copying file " << file.fileName();
+        bool success = file.copy(QString(USERHOME + CACHEDIR + fileName));
+        qDebug() << "success:" << success;
+    }
+
+    qDebug() << "copying" << backupEmoticons.size() << "entries from" << backupTheme;
+    foreach (QString fileName, backupEmoticons) {
+        QFile file(backupIconDir.filePath(fileName));
+        qDebug() << "copying file " << file.fileName();
+        bool success = file.copy(QString(USERHOME + CACHEDIR + fileName));
+        qDebug() << "success:" << success;
+    }
+    // verify cache dir
+    if (cacheDir.exists() && cacheDir.entryList().size() >= 18) {
+        emit cacheFixSucceeded();
+    } else {
+        emit cacheFixFailed();
+    }
 }
 
 
