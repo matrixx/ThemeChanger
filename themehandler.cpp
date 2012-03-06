@@ -160,6 +160,11 @@ void ThemeHandler::fixEmoticonCache()
     } else {
         qDebug() << "cachedir exists, continuing";
     }
+    QStringList existingCache = cacheDir.entryList();
+    foreach (QString fileName, existingCache) {
+        bool success = cacheDir.remove(fileName);
+        qDebug() << "success removing corrupted" << fileName << ":" << success;
+    }
     qDebug() << "copying" << emoticons.size() << "entries from" << currentTheme;
     foreach (QString fileName, emoticons) {
         QFile file(iconDir.filePath(fileName));
